@@ -633,7 +633,7 @@
           <span style="font-weight:900; font-size:12.5px; color:var(--text);">WORK ON</span>
           <img id="platformLogo" class="plat-mini" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQsfVdmGuDZ7IlvxPquF9JRNND4udNsLfQdKou7Evv0Q&s=10" alt="Azimutbet">
           <span style="font-weight:900; font-size:12.5px; color:var(--text);">PROMOCODE : 
-            <span id="promoCodeValue">FXX333</span>
+            <span id="promoCodeValue">Gooo33</span>
           </span>
           <i class="fas fa-copy copy-promo-icon" id="copyPromoBtn" title="نسخ البروموكود"></i>
         </div>
@@ -644,7 +644,7 @@
       <div class="steps">
         <ol>
           <li>هتحمل منصة <b id="platformNameInSteps">Azimutbet</b></li>
-          <li>هتعمل حساب جديد باستخدام البروموكود (<span class="promo-highlight">FXX333</span>)</li>
+          <li>هتعمل حساب جديد باستخدام البروموكود (<span class="promo-highlight">Gooo33</span>)</li>
           <li>قم بإيداع <b>10 دولار</b> في حسابك أو <b>5 دولار</b> بحد أدنى</li>
           <li>أدخل ID الحساب وضع الأسكرينات المطلوبة</li>
           <li>أضغط بدء التحقق لكي تأخذ الكود المجاني</li>
@@ -707,7 +707,7 @@
     const platformName = "Azimutbet";
     const platformLogo = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQsfVdmGuDZ7IlvxPquF9JRNND4udNsLfQdKou7Evv0Q&s=10";
     const platformKey = "Azimutbet";
-    const promocode = "FXX333";
+    const promocode = "Gooo33";
 
     // ========== نسخ البروموكود ==========
     document.getElementById('copyPromoBtn').addEventListener('click', function() {
@@ -843,6 +843,47 @@
       await wait(duration);
     }
 
+    function showGamesDialog(){
+      const games = [
+        { name: 'لعبة الطيارة', img: 'https://logo12.gamer.gd/plane.png', fa: 'fa-plane', url: 'crash.html' },
+        { name: 'لعبة التفاحة', img: 'https://logo12.gamer.gd/apple.png', fa: 'fa-apple-alt', url: 'apple.html' },
+        { name: 'لعبة الجواهر', img: 'https://logo12.gamer.gd/gem.png', fa: 'fa-gem', url: 'gems.html' }
+      ];
+
+      Swal.fire({
+        title: '🎮 اختر اللعبة',
+        html: `
+          <div class="games-list">
+            ${games.map(g => `
+              <button type="button" class="game-row" data-url="${g.url}">
+                <span class="game-title">${g.name}</span>
+                <span class="game-ic"><img src="${g.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('i'),{className:'fas ${g.fa}'}))"></span>
+              </button>
+            `).join('')}
+          </div>
+        `,
+        showConfirmButton: false,
+        showCloseButton: true,
+        customClass: {
+          popup: 'mafya-swal',
+          title: 'mafya-swal-title',
+          htmlContainer: 'mafya-swal-html'
+        },
+        didOpen: () => {
+          document.querySelectorAll('.game-row').forEach(btn => {
+            btn.addEventListener('click', () => {
+              window.location.href = btn.dataset.url;
+            });
+          });
+        }
+      });
+    }
+
+    if (new URLSearchParams(location.search).get('games') === '1'){
+      showGamesDialog();
+    }
+
+
     verifyBtn.addEventListener('click', async () => {
       if (verifying) return;
       const userId = document.getElementById('userId').value.trim();
@@ -915,39 +956,7 @@
           promocode: promocode
         }));
 
-        const games = [
-          { name: 'لعبة الطيارة', img: 'https://logo12.gamer.gd/plane.png', fa: 'fa-plane', url: 'crash.html' },
-          { name: 'لعبة التفاحة', img: 'https://logo12.gamer.gd/apple.png', fa: 'fa-apple-alt', url: 'apple.html' },
-          { name: 'لعبة الجواهر', img: 'https://logo12.gamer.gd/gem.png', fa: 'fa-gem', url: 'gems.html' }
-        ];
-
-        Swal.fire({
-          title: '🎮 اختر اللعبة',
-          html: `
-            <div class="games-list">
-              ${games.map(g => `
-                <button type="button" class="game-row" data-url="${g.url}">
-                  <span class="game-title">${g.name}</span>
-                  <span class="game-ic"><img src="${g.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('i'),{className:'fas ${g.fa}'}))"></span>
-                </button>
-              `).join('')}
-            </div>
-          `,
-          showConfirmButton: false,
-          showCloseButton: true,
-          customClass: {
-            popup: 'mafya-swal',
-            title: 'mafya-swal-title',
-            htmlContainer: 'mafya-swal-html'
-          },
-          didOpen: () => {
-            document.querySelectorAll('.game-row').forEach(btn => {
-              btn.addEventListener('click', () => {
-                window.location.href = btn.dataset.url;
-              });
-            });
-          }
-        });
+        showGamesDialog();
 
       } catch(err) {
         console.error(err);
