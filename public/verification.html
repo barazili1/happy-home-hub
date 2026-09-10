@@ -551,6 +551,58 @@
       border-color: #ffaa00 !important;
       color: #ffaa00 !important;
     }
+
+    /* قائمة الألعاب */
+    .games-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:4px;
+    }
+    .game-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      width:100%;
+      padding:10px 12px;
+      border-radius:16px;
+      background:rgba(5,11,46,.55);
+      border:1px solid rgba(168,230,0,.28);
+      cursor:pointer;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      direction:rtl;
+    }
+    .game-row:hover{
+      transform:translateY(-2px);
+      border-color:rgba(168,230,0,.6);
+      box-shadow:0 0 18px rgba(168,230,0,.22);
+    }
+    .game-title{
+      font-family:'Almarai',sans-serif;
+      font-weight:900;
+      font-size:14.5px;
+      color:#fff;
+    }
+    .game-ic{
+      width:50px;
+      height:50px;
+      flex:0 0 50px;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(168,230,0,.14);
+      border:1px solid rgba(168,230,0,.3);
+      overflow:hidden;
+      color:var(--accent);
+      font-size:22px;
+    }
+    .game-ic img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
   </style>
 </head>
 
