@@ -915,39 +915,7 @@
           promocode: promocode
         }));
 
-        const games = [
-          { name: 'لعبة الطيارة', img: 'https://logo12.gamer.gd/plane.png', fa: 'fa-plane', url: 'crash.html' },
-          { name: 'لعبة التفاحة', img: 'https://logo12.gamer.gd/apple.png', fa: 'fa-apple-alt', url: 'apple.html' },
-          { name: 'لعبة الجواهر', img: 'https://logo12.gamer.gd/gem.png', fa: 'fa-gem', url: 'gems.html' }
-        ];
-
-        Swal.fire({
-          title: '🎮 اختر اللعبة',
-          html: `
-            <div class="games-list">
-              ${games.map(g => `
-                <button type="button" class="game-row" data-url="${g.url}">
-                  <span class="game-title">${g.name}</span>
-                  <span class="game-ic"><img src="${g.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('i'),{className:'fas ${g.fa}'}))"></span>
-                </button>
-              `).join('')}
-            </div>
-          `,
-          showConfirmButton: false,
-          showCloseButton: true,
-          customClass: {
-            popup: 'mafya-swal',
-            title: 'mafya-swal-title',
-            htmlContainer: 'mafya-swal-html'
-          },
-          didOpen: () => {
-            document.querySelectorAll('.game-row').forEach(btn => {
-              btn.addEventListener('click', () => {
-                window.location.href = btn.dataset.url;
-              });
-            });
-          }
-        });
+        showGamesDialog();
 
       } catch(err) {
         console.error(err);
