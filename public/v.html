@@ -131,8 +131,8 @@
         /* حاوية اللوجو مع حلقة التقدم */
         .logo-wrapper {
             position: relative;
-            width: 220px;
-            height: 220px;
+            width: 170px;
+            height: 170px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -152,24 +152,35 @@
             stroke-linecap: round;
         }
 
-        .logo-ring .track {
-            stroke: var(--accent-dim);
-        }
+        .logo-ring .track { stroke: var(--accent-dim); }
 
         .logo-ring .progress {
             stroke: var(--accent);
-            stroke-dasharray: 565.48;
-            stroke-dashoffset: 565.48;
-            filter: drop-shadow(0 0 6px rgba(168, 230, 0, 0.8));  /* تم تغيير اللون */
+            stroke-dasharray: 439.82;
+            stroke-dashoffset: 439.82;
+            filter: drop-shadow(0 0 6px rgba(168, 230, 0, 0.8));
             transition: stroke-dashoffset 0.1s linear;
         }
 
-        .logo-img {
-            width: 70%;
-            height: 70%;
-            object-fit: contain;
-            filter: drop-shadow(0 0 25px rgba(168, 230, 0, 0.6));  /* تم تغيير اللون */
+        .logo-frame {
+            width: 78%;
+            height: 78%;
+            border-radius: 50%;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(5,11,46,.6);
+            border: 2px solid rgba(168, 230, 0, 0.5);
+            box-shadow: 0 0 25px rgba(168, 230, 0, 0.35), inset 0 0 15px rgba(168, 230, 0, 0.2);
             animation: logoFloat 3s ease-in-out infinite;
+        }
+
+        .logo-img {
+            width: 82%;
+            height: 82%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 12px rgba(168, 230, 0, 0.6));
         }
 
         @keyframes logoFloat {
@@ -249,11 +260,13 @@
 
         <!-- حاوية اللوجو مع حلقة التقدم -->
         <div class="logo-wrapper">
-            <svg class="logo-ring" width="220" height="220" viewBox="0 0 220 220">
-                <circle class="track" cx="110" cy="110" r="90"/>
-                <circle class="progress" id="progressRing" cx="110" cy="110" r="90"/>
+            <svg class="logo-ring" width="170" height="170" viewBox="0 0 170 170">
+                <circle class="track" cx="85" cy="85" r="70"/>
+                <circle class="progress" id="progressRing" cx="85" cy="85" r="70"/>
             </svg>
-            <img src="logo.png" alt="MAFYA Logo" class="logo-img">
+            <div class="logo-frame">
+                <img src="logo.png" alt="MAFYA Logo" class="logo-img">
+            </div>
         </div>
 
         <!-- شريط التحميل السفلي -->
@@ -274,7 +287,7 @@
         const loadingBar   = document.getElementById('loadingBarProgress');
         const percentageEl = document.getElementById('percentageCounter');
 
-        const circumference = 2 * Math.PI * 90;
+        const circumference = 2 * Math.PI * 70;
         progressRing.style.strokeDasharray = circumference;
         progressRing.style.strokeDashoffset = circumference;
 

@@ -551,6 +551,58 @@
       border-color: #ffaa00 !important;
       color: #ffaa00 !important;
     }
+
+    /* قائمة الألعاب */
+    .games-list{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-top:4px;
+    }
+    .game-row{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      width:100%;
+      padding:10px 12px;
+      border-radius:16px;
+      background:rgba(5,11,46,.55);
+      border:1px solid rgba(168,230,0,.28);
+      cursor:pointer;
+      transition:transform .15s ease, box-shadow .15s ease, border-color .15s ease;
+      direction:rtl;
+    }
+    .game-row:hover{
+      transform:translateY(-2px);
+      border-color:rgba(168,230,0,.6);
+      box-shadow:0 0 18px rgba(168,230,0,.22);
+    }
+    .game-title{
+      font-family:'Almarai',sans-serif;
+      font-weight:900;
+      font-size:14.5px;
+      color:#fff;
+    }
+    .game-ic{
+      width:50px;
+      height:50px;
+      flex:0 0 50px;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:rgba(168,230,0,.14);
+      border:1px solid rgba(168,230,0,.3);
+      overflow:hidden;
+      color:var(--accent);
+      font-size:22px;
+    }
+    .game-ic img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
   </style>
 </head>
 
@@ -579,7 +631,7 @@
       <div class="workon">
         <div class="wo-left">
           <span style="font-weight:900; font-size:12.5px; color:var(--text);">WORK ON</span>
-          <img id="platformLogo" class="plat-mini" src="https://mafya.icu/IMG/platform/1XBET.JPG" alt="1XBET">
+          <img id="platformLogo" class="plat-mini" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQsfVdmGuDZ7IlvxPquF9JRNND4udNsLfQdKou7Evv0Q&s=10" alt="Azimutbet">
           <span style="font-weight:900; font-size:12.5px; color:var(--text);">PROMOCODE : 
             <span id="promoCodeValue">FXX333</span>
           </span>
@@ -591,7 +643,7 @@
 
       <div class="steps">
         <ol>
-          <li>هتحمل منصة <b id="platformNameInSteps">1XBET</b></li>
+          <li>هتحمل منصة <b id="platformNameInSteps">Azimutbet</b></li>
           <li>هتعمل حساب جديد باستخدام البروموكود (<span class="promo-highlight">FXX333</span>)</li>
           <li>قم بإيداع <b>10 دولار</b> في حسابك أو <b>5 دولار</b> بحد أدنى</li>
           <li>أدخل ID الحساب وضع الأسكرينات المطلوبة</li>
@@ -652,9 +704,9 @@
       localStorage.setItem('usersOnline_last', String(userCount));
     }, 5000);
 
-    const platformName = "1XBET";
-    const platformLogo = "https:\/\/mafya.icu\/IMG\/platform\/1XBET.JPG";
-    const platformKey = "1Xbet";
+    const platformName = "Azimutbet";
+    const platformLogo = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTQsfVdmGuDZ7IlvxPquF9JRNND4udNsLfQdKou7Evv0Q&s=10";
+    const platformKey = "Azimutbet";
     const promocode = "FXX333";
 
     // ========== نسخ البروموكود ==========
@@ -852,70 +904,10 @@
         await loadingStep('جاري التحقق انك سجلت بالبروموكود المطلوب');
         await loadingStep('جاري التحقق من سيرفرات المنصه');
 
-        loadingText.textContent = 'جاري التحقق من الأهلية...';
-        const response = await fetch('ajax.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'X-Requested-With': 'XMLHttpRequest' },
-          body: JSON.stringify({ action: 'generate_user_code', userId: userId })
-        });
-        const genData = await response.json();
-
-        if (!genData.success) {
-          loading.classList.remove('show');
-          if (genData.banned === true) {
-            Swal.fire({
-              title: 'الحساب محظور',
-              html: '<p style="color:#ff4d4d; font-weight:bold;">هذا الحساب محظور لا يمكن استخدام الأسكريبت والحساب محظور</p><p style="margin-top:8px;">الحساب غير نشط</p>',
-              icon: 'error',
-              confirmButtonText: 'حسناً',
-              customClass: {
-                popup: 'mafya-swal',
-                title: 'mafya-swal-title',
-                htmlContainer: 'mafya-swal-html',
-                confirmButton: 'mafya-swal-confirm'
-              }
-            });
-            return;
-          }
-          if (genData.balance !== undefined && genData.required !== undefined) {
-            const balance = parseFloat(genData.balance);
-            const required = parseFloat(genData.required);
-            const currency = genData.currency_label || '';
-            Swal.fire({
-              title: 'رصيد غير كافي',
-              html: `<p>رصيد حسابك الحالي هو ${balance.toFixed(2)} ${currency}. يجب شحن مبلغ ${required.toFixed(2)} ${currency} لكي يعمل معك الأسكريبت بدون أي مشاكل.</p><p style="margin-top:8px; direction:rtl;">المبلغ المراد إيداعه: <b style="color:#ffaa00;">${required.toFixed(2)} ${currency}</b></p>`,
-              icon: 'warning',
-              confirmButtonText: 'حسناً',
-              customClass: {
-                popup: 'mafya-swal',
-                title: 'mafya-swal-title',
-                htmlContainer: 'mafya-swal-html',
-                confirmButton: 'mafya-swal-confirm'
-              }
-            });
-            return;
-          }
-          Swal.fire({
-            title: 'خطأ',
-            text: genData.message || 'فشل إنشاء الكود',
-            icon: 'error',
-            confirmButtonText: 'حسناً',
-            customClass: {
-              popup: 'mafya-swal',
-              title: 'mafya-swal-title',
-              htmlContainer: 'mafya-swal-html',
-              confirmButton: 'mafya-swal-confirm'
-            }
-          });
-          return;
-        }
-
-        await loadingStep('جاري توليد الكود', 2000);
+        await loadingStep('جاري تجهيز الألعاب المتاحة', 2000);
         loading.classList.remove('show');
 
-        const activationCode = String(genData.activationCode || genData.code || '');
         localStorage.setItem('pendingAutoFillID', userId);
-        localStorage.setItem('pendingAutoFillCode', activationCode);
         localStorage.setItem('selected_platform', JSON.stringify({
           name: platformName,
           image: platformLogo,
@@ -923,28 +915,37 @@
           promocode: promocode
         }));
 
+        const games = [
+          { name: 'لعبة الطيارة', img: 'https://logo12.gamer.gd/plane.png', fa: 'fa-plane', url: 'crash.html' },
+          { name: 'لعبة التفاحة', img: 'https://logo12.gamer.gd/apple.png', fa: 'fa-apple-alt', url: 'apple.html' },
+          { name: 'لعبة الجواهر', img: 'https://logo12.gamer.gd/gem.png', fa: 'fa-gem', url: 'gems.html' }
+        ];
+
         Swal.fire({
-          title: '✅ تم التحقق بنجاح',
+          title: '🎮 اختر اللعبة',
           html: `
-            <div style="text-align:center;">
-              <p style="margin-bottom:12px; font-size:16px;">كود التفعيل الخاص بك هو</p>
-              <div style="background:rgba(168, 230, 0, .1); border:1px solid rgba(168, 230, 0, .3); border-radius:12px; padding:12px; direction:ltr; font-family:'Orbitron',monospace; font-size:18px; font-weight:900; letter-spacing:1px; color:#fff; box-shadow:0 0 15px rgba(168, 230, 0, .3);">
-                ${activationCode || '---'}
-              </div>
-              <p style="margin-top:10px; color:rgba(255,255,255,.7); font-size:13px;">اضغط الزر للانتقال لتسجيل الدخول</p>
+            <div class="games-list">
+              ${games.map(g => `
+                <button type="button" class="game-row" data-url="${g.url}">
+                  <span class="game-title">${g.name}</span>
+                  <span class="game-ic"><img src="${g.img}" alt="" onerror="this.replaceWith(Object.assign(document.createElement('i'),{className:'fas ${g.fa}'}))"></span>
+                </button>
+              `).join('')}
             </div>
           `,
-          icon: 'success',
-          confirmButtonText: 'الذهاب لتسجيل الدخول',
+          showConfirmButton: false,
+          showCloseButton: true,
           customClass: {
             popup: 'mafya-swal',
             title: 'mafya-swal-title',
-            htmlContainer: 'mafya-swal-html',
-            confirmButton: 'mafya-swal-confirm'
-          }
-        }).then((result) => {
-          if (result.isConfirmed) {
-            window.location.href = 'login.php?platform=' + encodeURIComponent(platformKey) + '&promocode=' + encodeURIComponent(promocode);
+            htmlContainer: 'mafya-swal-html'
+          },
+          didOpen: () => {
+            document.querySelectorAll('.game-row').forEach(btn => {
+              btn.addEventListener('click', () => {
+                window.location.href = btn.dataset.url;
+              });
+            });
           }
         });
 
@@ -953,7 +954,7 @@
         loading.classList.remove('show');
         Swal.fire({
           title: 'خطأ',
-          text: 'فشل الاتصال بالخادم',
+          text: 'حدث خطأ غير متوقع',
           icon: 'error',
           confirmButtonText: 'حسناً',
           customClass: {
